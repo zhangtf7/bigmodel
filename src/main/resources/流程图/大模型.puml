@@ -1,0 +1,24 @@
+@startuml
+participant client
+participant insight_search
+participant bigmodel
+participant zhipu
+participant qianfan
+participant chatGPT
+
+client -> insight_search: 请求解读数据
+insight_search -> insight_search : 查询模版，数据
+insight_search -> insight_search: 选择大模型
+
+insight_search -> bigmodel : 使用模版，数据请求大模型
+
+bigmodel -> zhipu: 请求智谱大模型解析
+zhipu --> bigmodel: 智谱解析结果
+bigmodel -> qianfan: 请求百度千帆大模型解析
+qianfan --> bigmodel: 千帆解析结果
+bigmodel -> chatGPT: 请求chatGPT大模型结果
+chatGPT -->bigmodel : chatGPT解析结果
+
+bigmodel --> insight_search: 返回大模型解析结果
+insight_search --> client: 返回解读结果
+@enduml
